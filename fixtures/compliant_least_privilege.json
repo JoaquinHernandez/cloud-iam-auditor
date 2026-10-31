@@ -1,0 +1,47 @@
+cat << 'EOF' > fixtures/compliant_least_privilege.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3ReadOnlyObjectAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::production-app-assets/*"
+    }
+  ]
+}
+EOF
+
+cat << 'EOF' > fixtures/toxic_passrole.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DangerousComputeDelegation",
+      "Effect": "Allow",
+      "Action": [
+        "iam:PassRole",
+        "ec2:RunInstances"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+
+cat << 'EOF' > fixtures/toxic_wildcard.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullAdministratorAccess",
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*"
+    }
+  ]
+}
+EOF

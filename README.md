@@ -10,34 +10,6 @@
 ![Compliance](https://img.shields.io/badge/Compliance-CIS_AWS_Benchmark-blue?style=for-the-badge)
 
 A security audit engine that inspects AWS IAM policies for privilege escalation paths, toxic permission chains, and administrative wildcards.
-MITRE ATT&CK Matrix Alignment
-T1078.004 (Cloud Accounts): Detects policies permitting secondary credential generation via iam:CreateAccessKey or iam:CreateLoginProfile.
-
-T1098 (Account Manipulation): Detects unauthorized permission additions via iam:AttachRolePolicy or iam:PutUserPolicy.
-
-T1053.005 (Scheduled Task): Flags compute-execution boundaries where roles can be passed to execute workloads with elevated identities.
-
-2. Rule Catalog
-Rule ID	Severity	Vector Description	MITRE Mapping
-SEC-IAM-001	CRITICAL	Unconstrained administrative wildcard (* or *:*)	T1078.004
-SEC-IAM-002	HIGH	Direct credential injection or policy elevation primitive	T1098
-SEC-IAM-003	CRITICAL	iam:PassRole combined with compute provisioning rights	T1078.004
-3. Quickstart & Verification
-Local Offline Scan
-Bash
-# Evaluate compliant policy
-python main.py --file fixtures/compliant_least_privilege.json
-
-# Evaluate toxic PassRole policy (terminates with exit code 1)
-python main.py --file fixtures/toxic_passrole.json
-Live AWS Account Audit
-Bash
-# Requires configured AWS credentials (AWS_PROFILE or environment keys)
-python main.py --live
-Run Test Suite
-Bash
-pytest tests/ -v
-EOF
 
 
 ---
